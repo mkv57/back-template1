@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+package api.annotations.v1;
+
+import "google/protobuf/descriptor.proto";
+import "google/rpc/code.proto";
+
+option go_package = "github.com/ZergsLaw/back-template/api/annotations/v1;pb";
+
+message MethodRule {
+  repeated google.rpc.Code codes = 1;
+  bool need_authorization = 2;
+  repeated string response_metadata = 3;
+}
+
+extend google.protobuf.MethodOptions {
+  MethodRule method_rule = 71599529;
+}
+
+message ServiceRule {
+  repeated google.rpc.Code codes = 1;
+}
+
+extend google.protobuf.ServiceOptions {
+  ServiceRule service_rule = 51562530;
+}

@@ -1,0 +1,339 @@
+syntax = "proto3";
+
+package api.user.v1;
+
+import "api/annotations/v1/annotations.proto";
+import "buf/validate/validate.proto";
+import "google/api/annotations.proto";
+import "google/api/field_behavior.proto";
+import "google/protobuf/timestamp.proto";
+import "google/rpc/code.proto";
+import "api/user_status/v1/user_status.proto";
+
+option go_package = "github.com/ZergsLaw/back-template/api/user/v1;pb";
+
+// External service API for managing user's information.
+service UserExternalAPI {
+  option (api.annotations.v1.service_rule) = {
+    codes: [
+      OK,
+      CANCELLED,
+      DEADLINE_EXCEEDED,
+      INTERNAL
+    ]
+  };
+
+  // Verification and exist checking user's email.
+  // It should be valid email.
+  rpc VerificationEmail(VerificationEmailRequest) returns (VerificationEmailResponse) {
+    option (google.api.http) = {get: "/user/api/v1/verification/email"};
+    option (api.annotations.v1.method_rule) = {
+      codes: [
+        INVALID_ARGUMENT,
+        ALREADY_EXISTS
+      ]
+    };
+  }
+
+  // Verification and exist checking user's name.
+  // It should be valid email.
+  rpc VerificationUsername(VerificationUsernameRequest) returns (VerificationUsernameResponse) {
+    option (google.api.http) = {get: "/user/api/v1/verification/username"};
+    option (api.annotations.v1.method_rule) = {
+      codes: [
+        INVALID_ARGUMENT,
+        ALREADY_EXISTS
+      ]
+    };
+  }
+
+  // Create user by params.
+  rpc CreateUser(CreateUserRequest) returns (CreateUserResponse) {
+    option (google.api.http) = {
+      post: "/user/api/v1/user",
+      body: "*"
+    };
+    option (api.annotations.v1.method_rule) = {
+      codes: [
+        INVALID_ARGUMENT,
+        ALREADY_EXISTS
+      ]
+    };
+  }
+
+  // Login by email.
+  rpc Login(LoginRequest) returns (LoginResponse) {
+    option (google.api.http) = {
+      post: "/user/api/v1/login",
+      body: "*"
+    };
+    option (api.annotations.v1.method_rule) = {
+      codes: [
+        INVALID_ARGUMENT,
+        NOT_FOUND
+      ],
+      response_metadata: ["Authorization"]
+    };
+  }
+
+  // Logout and remove user session.
+  rpc Logout(LogoutRequest) returns (LogoutResponse) {
+    option (google.api.http) = {post: "/user/api/v1/logout"};
+    option (api.annotations.v1.method_rule) = {
+      codes: [
+        INVALID_ARGUMENT,
+        UNAUTHENTICATED
+      ],
+    };
+  }
+
+  // Get user's information.
+  // If you not send user's id, we will return caller's profile by authorization token.
+  rpc GetUser(GetUserRequest) returns (GetUserResponse) {
+    option (google.api.http) = {
+      get: "/user/api/v1/user",
+      response_body: "*"
+    };
+    option (api.annotations.v1.method_rule) = {
+      codes: [
+        INVALID_ARGUMENT,
+        NOT_FOUND,
+        UNAUTHENTICATED
+      ],
+      need_authorization: true,
+    };
+  }
+
+  // Search users by username and full name.
+  rpc SearchUsers(SearchUsersRequest) returns (SearchUsersResponse) {
+    option (google.api.http) = {get: "/user/api/v1/users"};
+    option (api.annotations.v1.method_rule) = {
+      codes: [
+        INVALID_ARGUMENT,
+        UNAUTHENTICATED
+      ],
+      need_authorization: true,
+    };
+  }
+
+  // Set new password.
+  rpc UpdatePassword(UpdatePasswordRequest) returns (UpdatePasswordResponse) {
+    option (google.api.http) = {
+      patch: "/user/api/v1/password",
+      body: "*"
+    };
+    option (api.annotations.v1.method_rule) = {
+      codes: [
+        INVALID_ARGUMENT,
+        NOT_FOUND
+      ],
+      need_authorization: true,
+    };
+  }
+
+  // Update profile.
+  rpc UpdateUser(UpdateUserRequest) returns (UpdateUserResponse) {
+    option (google.api.http) = {
+      put: "/user/api/v1/user",
+      body: "*"
+    };
+    option (api.annotations.v1.method_rule) = {
+      codes: [
+        INVALID_ARGUMENT,
+        NOT_FOUND
+      ],
+      need_authorization: true,
+    };
+  }
+
+  // Remove user avatar.
+  rpc RemoveAvatar(RemoveAvatarRequest) returns (RemoveAvatarResponse) {
+    option (google.api.http) = {delete: "/user/api/v1/avatar"};
+    option (api.annotations.v1.method_rule) = {
+      codes: [INVALID_ARGUMENT],
+      need_authorization: true,
+    };
+  }
+
+  // List user avatar.
+  rpc ListUserAvatar(ListUserAvatarRequest) returns (ListUserAvatarResponse) {
+    option (google.api.http) = {get: "/user/api/v1/avatar/list"};
+    option (api.annotations.v1.method_rule) = {
+      codes: [
+        INVALID_ARGUMENT,
+        ALREADY_EXISTS
+      ],
+      need_authorization: true,
+    };
+  }
+
+  // Search users by ids.
+  rpc GetUsersByIDs(GetUsersByIDsRequest) returns (GetUsersByIDsResponse) {
+    option (google.api.http) = {get: "/user/api/v1/get/users"};
+    option (api.annotations.v1.method_rule) = {
+      codes: [
+        INVALID_ARGUMENT,
+        UNAUTHENTICATED
+      ],
+      need_authorization: true,
+    };
+  }
+}
+
+message GetUsersByIDsRequest {
+  repeated string ids = 1 [(buf.validate.field).repeated = {
+    unique: true,
+    max_items: 100,
+    items {
+      string {uuid: true}
+    }
+  }];
+}
+
+message GetUsersByIDsResponse {
+  repeated User result = 1;
+}
+
+message VerificationEmailRequest {
+  string email = 1 [(buf.validate.field).string = {
+    email: true,
+    max_len: 999
+  }];
+}
+message VerificationEmailResponse {}
+
+message VerificationUsernameRequest {
+  string username = 1 [(buf.validate.field).string = {
+    min_len: 2,
+    max_len: 32
+  }];
+}
+message VerificationUsernameResponse {}
+
+message CreateUserRequest {
+  string username = 1 [(buf.validate.field).string = {
+    min_len: 2,
+    max_len: 32
+  }];
+  string email = 2 [(buf.validate.field).string = {
+    email: true,
+    max_len: 99
+  }];
+  string password = 3 [(buf.validate.field).string = {
+    min_len: 8,
+    max_len: 32
+  }];
+  string full_name = 4 [(buf.validate.field).string = {
+    min_len: 2,
+    max_len: 100,
+  }];
+}
+message CreateUserResponse {
+  string id = 1 [(buf.validate.field).string = {uuid: true}];
+}
+
+message LoginRequest {
+  string email = 1 [(buf.validate.field).string = {
+    email: true,
+    max_len: 99
+  }];
+  string password = 2 [(buf.validate.field).string = {
+    min_len: 8,
+    max_len: 32
+  }];
+}
+message LoginResponse {
+  string user_id = 1 [(buf.validate.field).string = {uuid: true}];
+}
+
+message GetUserRequest {
+  string id = 1 [(buf.validate.field).string = {uuid: true}];
+}
+message GetUserResponse {
+  User user = 1;
+}
+
+message SearchUsersRequest {
+  // We are using this field for searching users by username and full name.
+  string name = 1 [(buf.validate.field).string = {
+    min_len: 2,
+    max_len: 100
+  }];
+  int32 limit = 2 [(buf.validate.field).int32 = {
+    gte: 1,
+    lte: 500
+  }];
+  int32 offset = 3 [(buf.validate.field).int32 = {gte: 0}];
+}
+message SearchUsersResponse {
+  repeated User users = 1;
+  int32 total = 2;
+}
+
+message LogoutRequest {}
+message LogoutResponse {}
+
+message UpdatePasswordRequest {
+  string old = 1 [(buf.validate.field).string = {
+    min_len: 8,
+    max_len: 32
+  }];
+  string new = 2 [(buf.validate.field).string = {
+    min_len: 8,
+    max_len: 32
+  }];
+}
+message UpdatePasswordResponse {}
+
+message UpdateUserRequest {
+  string username = 1 [(buf.validate.field).string = {
+    min_len: 2,
+    max_len: 32
+  }];
+  string avatar_id = 2 [(buf.validate.field).string = {uuid: true}];
+  string full_name = 3 [(buf.validate.field).string = {
+    min_len: 2,
+    max_len: 100,
+  }];
+}
+message UpdateUserResponse {}
+
+message User {
+  string id = 1 [(buf.validate.field).string = {uuid: true}];
+  string username = 2 [(buf.validate.field).string = {
+    min_len: 2,
+    max_len: 32
+  }];
+  string email = 3 [(buf.validate.field).string = {
+    email: true,
+    max_len: 99
+  }];
+  string avatar_id = 4 [(buf.validate.field).string = {uuid: true}];
+  api.user_status.v1.StatusKind kind = 5 [(buf.validate.field).enum = {
+    defined_only: true,
+    not_in: [0]
+  }];
+  string full_name = 6 [(buf.validate.field).string = {
+    min_len: 2,
+    max_len: 100,
+  }];
+  google.protobuf.Timestamp created_at = 7;
+  google.protobuf.Timestamp updated_at = 8;
+}
+
+message RemoveAvatarRequest {
+  string file_id = 1 [(buf.validate.field).string = {uuid: true}];
+}
+message RemoveAvatarResponse {}
+
+message ListUserAvatarRequest {
+  string user_id = 1;
+}
+message ListUserAvatarResponse {
+  repeated UserAvatar avatars = 1;
+}
+
+message UserAvatar {
+  string user_id = 1 [(buf.validate.field).string = {uuid: true}];
+  string file_id = 2 [(buf.validate.field).string = {uuid: true}];
+}

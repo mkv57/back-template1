@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package api.user_status.v1;
+
+option go_package = "github.com/ZergsLaw/back-template/api/user_status/v1;pb";
+
+// Kind of user`s status.
+enum StatusKind {
+  // For unknown value.
+  // Can't be anyway.
+  STATUS_KIND_NONE = 0;
+  // Kind of user who was banned.
+  STATUS_KIND_FREEZE = 1;
+  // Kind hat is assigned to all users at registration.
+  STATUS_KIND_DEFAULT = 2;
+  // Kind of premium user.
+  STATUS_KIND_PREMIUM = 3;
+  // Kind of user support.
+  STATUS_KIND_SUPPORT = 4;
+  // Kind of user admin.
+  STATUS_KIND_ADMIN = 5;
+  // Kind of super user.
+  STATUS_KIND_JEDI = 6;
+}

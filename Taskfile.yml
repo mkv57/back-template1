@@ -1,0 +1,79 @@
+version: '3'
+
+tasks:
+
+  test-unit:
+    dir: '{{.USER_WORKING_DIR}}'
+    cmds:
+      - "gotestsum --format pkgname -- -coverprofile=cover.out -race -count=1 ./..."
+
+  test-integration:
+    dir: '{{.USER_WORKING_DIR}}'
+    cmds:
+      - "gotestsum --format pkgname -- -coverprofile=cover.out -tags=integration -race -count=1 ./..."
+
+  build:
+    dir: '{{.USER_WORKING_DIR}}'
+    preconditions:
+      - "test -f ./scripts/build.sh"
+    cmds:
+      - "./scripts/build.sh"
+
+  generate_certs:
+    dir: '{{.USER_WORKING_DIR}}'
+    vars:
+      COCKROACH_IMAGE: "cockroachdb/cockroach:v23.1.11"
+    preconditions:
+      - "test -f env.sh"
+    cmds:
+      - rm -rf ./certs
+      - | 
+        docker run --rm \
+         		 --volume $(pwd)/certs/cockroach:/app \
+         		 --volume $(pwd)/scripts/build_certs.sh:/init.sh \
+         		 --entrypoint=""\
+         		 --platform=linux/amd64 \
+         		 --workdir /app {{ .COCKROACH_IMAGE }} /init.sh
+
+  init:
+    dir: '{{.USER_WORKING_DIR}}'
+    deps:
+      - generate_certs
+    preconditions:
+      - "test -f ./scripts/build_env.sh"
+      - "test -f env.sh"
+    cmds:
+      - "./scripts/build_env.sh env.sh"
+      - "go get -v ./..."
+
+  lint:
+    dir: '{{.USER_WORKING_DIR}}'
+    deps:
+      - test-unit
+      - build
+    cmds:
+      - "go get -v ./..."
+      - "golangci-lint run ./..."
+      - "buf lint"
+
+  up:
+    dir: '{{.USER_WORKING_DIR}}'
+    deps:
+      - "init"
+      - "build"
+    dotenv:
+      - ".env"
+    preconditions:
+      - "test -f env.sh"
+      - "test -f docker-compose.yml"
+    cmds:
+      - "docker compose up --build --remove-orphans --detach"
+
+  down:
+    dir: '{{.USER_WORKING_DIR}}'
+    dotenv:
+      - ".env"
+    preconditions:
+      - "test -f docker-compose.yml"
+    cmds:
+      - "docker compose down --volumes"

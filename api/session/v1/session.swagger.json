@@ -1,0 +1,92 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "api/session/v1/session.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "SessionInternalAPI"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {},
+  "definitions": {
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "v1DeleteResponse": {
+      "type": "object"
+    },
+    "v1GetResponse": {
+      "type": "object",
+      "properties": {
+        "sessionId": {
+          "type": "string",
+          "description": "Contains session's UUID."
+        },
+        "userId": {
+          "type": "string",
+          "description": "Contains user's UUID."
+        },
+        "kind": {
+          "$ref": "#/definitions/v1StatusKind",
+          "description": "Contains user`s status information."
+        }
+      }
+    },
+    "v1SaveResponse": {
+      "type": "object",
+      "properties": {
+        "token": {
+          "type": "string",
+          "description": "User's auth token."
+        }
+      }
+    },
+    "v1StatusKind": {
+      "type": "string",
+      "enum": [
+        "STATUS_KIND_NONE",
+        "STATUS_KIND_FREEZE",
+        "STATUS_KIND_DEFAULT",
+        "STATUS_KIND_PREMIUM",
+        "STATUS_KIND_SUPPORT",
+        "STATUS_KIND_ADMIN",
+        "STATUS_KIND_JEDI"
+      ],
+      "default": "STATUS_KIND_NONE",
+      "description": "Kind of user`s status.\n\n - STATUS_KIND_NONE: For unknown value.\nCan't be anyway.\n - STATUS_KIND_FREEZE: Kind of user who was banned.\n - STATUS_KIND_DEFAULT: Kind hat is assigned to all users at registration.\n - STATUS_KIND_PREMIUM: Kind of premium user.\n - STATUS_KIND_SUPPORT: Kind of user support.\n - STATUS_KIND_ADMIN: Kind of user admin.\n - STATUS_KIND_JEDI: Kind of super user."
+    }
+  }
+}

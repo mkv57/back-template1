@@ -1,0 +1,205 @@
+version: "3.9"
+
+volumes:
+  minio_node1:
+  nats_node1:
+  nats_node2:
+  nats_node3:
+  cockroach_node1:
+  cockroach_node2:
+  cockroach_node3:
+
+services:
+
+  minio-node1:
+    image: docker.io/bitnami/minio:2023
+    container_name: "back_template_minio_node1"
+    restart: "always"
+    shm_size: "512m"
+    environment:
+      MINIO_ROOT_USER: "test_svc"
+      MINIO_ROOT_PASSWORD: "test_pass"
+    ports:
+      - "${BACK_TEMPLATE_MINIO_NODE1_ADDR_HTTP_PORT:-0}:9000"
+      - "${BACK_TEMPLATE_MINIO_NODE1_ADDR_ADMIN_PORT:-0}:9001"
+    volumes:
+      - "minio_node1:/data/"
+
+  nats-node1:
+    image: nats:2.10.5
+    container_name: "back_template_nats_node1"
+    restart: "always"
+    shm_size: "512m"
+    ports:
+      - "${BACK_TEMPLATE_NATS_NODE1_ADDR_TCP_PORT:-0}:4222"
+      - "${BACK_TEMPLATE_NATS_NODE1_ADDR_HTTP_PORT:-0}:8222"
+    volumes:
+      - "nats_node1:/data/jetstream"
+      - "./configs/nats/node1/srv.conf/:/srv.conf"
+    command: [
+      "-c=/srv.conf",
+    ]
+
+  nats-node2:
+    image: nats:2.10.5
+    container_name: "back_template_nats_node2"
+    restart: "always"
+    shm_size: "512m"
+    ports:
+      - "${BACK_TEMPLATE_NATS_NODE2_ADDR_TCP_PORT:-0}:4222"
+      - "${BACK_TEMPLATE_NATS_NODE2_ADDR_HTTP_PORT:-0}:8222"
+    volumes:
+      - "nats_node2:/data/jetstream"
+      - "./configs/nats/node2/srv.conf/:/srv.conf"
+    command: [
+      "-c=/srv.conf",
+    ]
+
+  nats-node3:
+    image: nats:2.10.5
+    container_name: "back_template_nats_node3"
+    restart: "always"
+    shm_size: "512m"
+    ports:
+      - "${BACK_TEMPLATE_NATS_NODE3_ADDR_TCP_PORT:-0}:4222"
+      - "${BACK_TEMPLATE_NATS_NODE3_ADDR_HTTP_PORT:-0}:8222"
+    volumes:
+      - "nats_node3:/data/jetstream"
+      - "./configs/nats/node3/srv.conf/:/srv.conf"
+    command: [
+      "-c=/srv.conf",
+    ]
+
+  cockroach-node1:
+    image: cockroachdb/cockroach:v23.1.11
+    container_name: "back_template_cockroach_node1"
+    restart: "always"
+    shm_size: "512m"
+    ports:
+      - "${BACK_TEMPLATE_COCKROACH_NODE1_ADDR_TCP_PORT:-0}:26257"
+      - "${BACK_TEMPLATE_COCKROACH_NODE1_ADDR_HTTP_PORT:-0}:8080"
+    volumes:
+      - "cockroach_node1:/cockroach/cockroach-data:r"
+      - "${COCKROACH_TLS_CERT}:/cockroach/certs/ca.crt:r"
+      - "${COCKROACH_TLS_KEY}:/cockroach/certs/ca.key:r"
+      - "${COCKROACH_NODE1_CRT}:/cockroach/certs/node.crt:r"
+      - "${COCKROACH_NODE1_KEY}:/cockroach/certs/node.key:r"
+    command: [
+      "start",
+      "--certs-dir=/cockroach/certs/",
+      "--advertise-addr=cockroach-node1",
+      "--join=cockroach-node1,cockroach-node2,cockroach-node3",
+      "--cache=.25",
+      "--max-sql-memory=.25",
+    ]
+
+  cockroach-node2:
+    image: cockroachdb/cockroach:v23.1.11
+    container_name: "back_template_cockroach_node2"
+    restart: "always"
+    shm_size: "512m"
+    ports:
+      - "${BACK_TEMPLATE_COCKROACH_NODE2_ADDR_TCP_PORT:-0}:26257"
+      - "${BACK_TEMPLATE_COCKROACH_NODE2_ADDR_HTTP_PORT:-0}:8080"
+    volumes:
+      - "cockroach_node2:/cockroach/cockroach-data"
+      - "${COCKROACH_TLS_CERT}:/cockroach/certs/ca.crt"
+      - "${COCKROACH_TLS_KEY}:/cockroach/certs/ca.key"
+      - "${COCKROACH_NODE2_CRT}:/cockroach/certs/node.crt"
+      - "${COCKROACH_NODE2_KEY}:/cockroach/certs/node.key"
+    command: [
+      "start",
+      "--certs-dir=/cockroach/certs/",
+      "--advertise-addr=cockroach-node2",
+      "--join=cockroach-node1,cockroach-node2,cockroach-node3",
+      "--cache=.25",
+      "--max-sql-memory=.25",
+    ]
+
+  cockroach-node3:
+    image: cockroachdb/cockroach:v23.1.11
+    container_name: "back_template_cockroach_node3"
+    restart: "always"
+    shm_size: "512m"
+    ports:
+      - "${BACK_TEMPLATE_COCKROACH_NODE3_ADDR_TCP_PORT:-0}:26257"
+      - "${BACK_TEMPLATE_COCKROACH_NODE3_ADDR_HTTP_PORT:-0}:8080"
+    volumes:
+      - "cockroach_node3:/cockroach/cockroach-data"
+      - "${COCKROACH_TLS_CERT}:/cockroach/certs/ca.crt"
+      - "${COCKROACH_TLS_KEY}:/cockroach/certs/ca.key"
+      - "${COCKROACH_NODE3_CRT}:/cockroach/certs/node.crt"
+      - "${COCKROACH_NODE3_KEY}:/cockroach/certs/node.key"
+    command: [
+      "start",
+      "--certs-dir=/cockroach/certs/",
+      "--advertise-addr=cockroach-node3",
+      "--join=cockroach-node1,cockroach-node2,cockroach-node3",
+      "--cache=.25",
+      "--max-sql-memory=.25",
+    ]
+
+  cockroach-init:
+    image: cockroachdb/cockroach:v23.1.11
+    container_name: "back_template_cockroach_init"
+    restart: "no"
+    depends_on:
+      - cockroach-node1
+      - cockroach-node2
+      - cockroach-node3
+    volumes:
+      - "${COCKROACH_TLS_CERT}:/cockroach/certs/ca.crt"
+      - "${COCKROACH_TLS_KEY}:/cockroach/certs/ca.key"
+      - "${COCKROACH_CLIENT_TLS_CERT}:/cockroach/certs/client.root.crt"
+      - "${COCKROACH_CLIENT_TLS_KEY}:/cockroach/certs/client.root.key"
+      - "./scripts/cockroach_setup.sh:/cockroach_setup.sh"
+    environment:
+      CERTS_DIR: "/cockroach/certs/"
+      HOST: "cockroach-node1:26257"
+    entrypoint:
+      - bash
+      - -c
+      - |
+        while ! timeout --foreground 0.5 bash -c "echo -n >/dev/tcp/cockroach-node1/26257" 2>/dev/null; do
+            echo waiting for cockroach-node1
+            sleep 0.5
+        done
+        set -x -e -o pipefail
+        chmod +x /cockroach_setup.sh
+        /cockroach_setup.sh user session subscription post like comment news black_list report wallet
+
+  session-svc:
+    build:
+      context: .
+      dockerfile: ./cmd/session/docker/Dockerfile
+    container_name: "back_template_session_svc"
+    restart: always
+    command: [
+      "-cfg=/config.yml",
+      "-log_level=debug",
+    ]
+    volumes:
+      - "${SESSION_SVC_CONFIG}:/config.yml"
+    ports:
+      - "${SESSION_SVC_GRPC_PORT}:8080" # gRPC
+      - "${SESSION_SVC_METRIC_PORT}:8081" # metric
+
+
+  user-svc:
+    build:
+      context: .
+      dockerfile: ./cmd/user/docker/Dockerfile
+    container_name: "back_template_user_svc"
+    restart: always
+    command: [
+      "-cfg=/config.yml",
+      "-log_level=debug",
+    ]
+    volumes:
+      - "${USER_SVC_CONFIG}:/config.yml"
+    ports:
+      - "${USER_SVC_GRPC_PORT}:8080" # gRPC
+      - "${USER_SVC_METRIC_PORT}:8081" # metric
+      - "${USER_SVC_GRPC_GW_PORT}:8082" # gRPC-Gateway
+      - "${USER_SVC_GRPC_FILES_PORT}:8083" # file srv
+

@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+package api.user.v1;
+
+import "api/annotations/v1/annotations.proto";
+import "api/user/v1/user.proto";
+import "api/user_status/v1/user_status.proto";
+import "buf/validate/validate.proto";
+import "google/api/annotations.proto";
+import "google/api/field_behavior.proto";
+import "google/protobuf/timestamp.proto";
+import "google/rpc/code.proto";
+
+option go_package = "github.com/ZergsLaw/back-template/api/user/v1;pb";
+
+message Add {
+  User user = 1 [(buf.validate.field) = {required: true}];
+}
+
+message Update {
+  User user = 1 [(buf.validate.field) = {required: true}];
+}
+
+message Delete {
+  string user_id = 1 [(buf.validate.field).string = {uuid: true}];
+}
+
+message Event {
+  // Contains event body.
+  oneof body {
+    option (buf.validate.oneof).required = true;
+    Add add = 1;
+    Update update = 2;
+    Delete delete = 3;
+  }
+}

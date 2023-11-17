@@ -1,0 +1,26 @@
+auth_key: "super-duper-secret-key-qwertyuio"
+server:
+  host: "0.0.0.0"
+  port:
+    grpc: 8080
+    metric: 8081
+db:
+  migrate_dir: "migrate"
+  driver: "postgres"
+  cockroach:
+    user: "session_svc"
+    password: "session_pass"
+    host: "cockroach-node1"
+    port: 26257
+    database: "session_db"
+    parameters:
+      application_name: "session_service"
+      mode: "require"
+queue:
+  urls: [
+    "nats://nats-node1:4222",
+    "nats://nats-node2:4222",
+    "nats://nats-node3:4222",
+  ]
+  username: "session_svc"
+  password: "super_duper_secret_key"
