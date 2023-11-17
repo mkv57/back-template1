@@ -147,7 +147,7 @@
       }
     },
     "/user/api/v1/logout": {
-      "post": {
+      "delete": {
         "summary": "Logout and remove user session.",
         "operationId": "UserExternalAPI_Logout",
         "responses": {

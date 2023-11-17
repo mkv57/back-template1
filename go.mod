@@ -15,6 +15,7 @@ require (
 	github.com/laher/mergefs v0.1.1
 	github.com/lib/pq v1.10.9
 	github.com/minio/minio-go/v7 v7.0.63
+	github.com/mvrilo/go-redoc v0.1.4
 	github.com/nats-io/nats.go v1.31.0
 	github.com/o1egl/paseto/v2 v2.1.1
 	github.com/ory/dockertest/v3 v3.10.0

@@ -3,12 +3,12 @@ syntax = "proto3";
 package api.user.v1;
 
 import "api/annotations/v1/annotations.proto";
+import "api/user_status/v1/user_status.proto";
 import "buf/validate/validate.proto";
 import "google/api/annotations.proto";
 import "google/api/field_behavior.proto";
 import "google/protobuf/timestamp.proto";
 import "google/rpc/code.proto";
-import "api/user_status/v1/user_status.proto";
 
 option go_package = "github.com/ZergsLaw/back-template/api/user/v1;pb";
 
@@ -78,7 +78,7 @@ service UserExternalAPI {
 
   // Logout and remove user session.
   rpc Logout(LogoutRequest) returns (LogoutResponse) {
-    option (google.api.http) = {post: "/user/api/v1/logout"};
+    option (google.api.http) = {delete: "/user/api/v1/logout"};
     option (api.annotations.v1.method_rule) = {
       codes: [
         INVALID_ARGUMENT,
@@ -330,7 +330,8 @@ message ListUserAvatarRequest {
   string user_id = 1;
 }
 message ListUserAvatarResponse {
-  repeated UserAvatar avatars = 1;
+  repeated
+UserAvatar avatars = 1;
 }
 
 message UserAvatar {

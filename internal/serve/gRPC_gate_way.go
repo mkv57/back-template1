@@ -2,32 +2,30 @@ package serve
 
 import (
 	"context"
+	"embed"
 	"fmt"
-	"io/fs"
 	"log/slog"
 	"net"
 	"net/http"
 
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
-	"github.com/laher/mergefs"
+	"github.com/mvrilo/go-redoc"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/rs/cors"
 	"google.golang.org/grpc"
 
 	"github.com/ZergsLaw/back-template/internal/grpchelper"
-	swagger_ui "github.com/ZergsLaw/back-template/internal/swagger-ui"
 )
 
 // GateWayConfig is config for building gRPC-Gateway proxy for WEB clients.
 type GateWayConfig struct {
-	FS             fs.FS
+	FS             embed.FS
+	Spec           string
 	GRPCServerPort uint16
 	Reg            *prometheus.Registry
 	Namespace      string
-	GRPCGWPattern  string // Pattern for http.ServeMux to serve grpc-gateway.
-	OpenAPIPattern string // Pattern for http.ServeMux to serve swagger.json.
-	DocsUIPattern  string // Pattern for http.ServeMux to serve Swagger UI.
-	StaticFS       fs.FS
+	GRPCGWPattern  string                                                           // Pattern for http.ServeMux to serve grpc-gateway.
+	DocsUIPattern  string                                                           // Pattern for http.ServeMux to serve Swagger UI.
 	Register       func(context.Context, *runtime.ServeMux, *grpc.ClientConn) error // Register gRPC server.
 	DevMode        bool
 }
@@ -64,8 +62,12 @@ func GRPCGateWay(log *slog.Logger, host string, port uint16, cfg GateWayConfig) 
 		}))
 
 		if cfg.DevMode {
-			mux.Handle(cfg.OpenAPIPattern, http.StripPrefix(cfg.OpenAPIPattern, http.FileServer(http.FS(cfg.FS))))
-			mux.Handle(cfg.DocsUIPattern, http.StripPrefix(cfg.DocsUIPattern, http.FileServer(http.FS(mergefs.Merge(cfg.StaticFS, swagger_ui.SwaggerUI)))))
+			doc := redoc.Redoc{
+				SpecPath: cfg.Spec,
+				SpecFile: cfg.Spec,
+				SpecFS:   &cfg.FS,
+			}
+			mux.Handle(cfg.DocsUIPattern, doc.Handler())
 		}
 
 		return HTTP(log, host, port, mux)(ctx)

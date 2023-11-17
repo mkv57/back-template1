@@ -26,7 +26,6 @@ import (
 	"github.com/ZergsLaw/back-template/cmd/user/internal/api/grpc"
 	"github.com/ZergsLaw/back-template/cmd/user/internal/api/http"
 	"github.com/ZergsLaw/back-template/cmd/user/internal/app"
-	"github.com/ZergsLaw/back-template/cmd/user/static"
 	session_adapter "github.com/ZergsLaw/back-template/internal/adapters/session"
 	"github.com/ZergsLaw/back-template/internal/flags"
 	"github.com/ZergsLaw/back-template/internal/grpchelper"
@@ -181,13 +180,12 @@ func run(ctx context.Context, cfg config, reg *prometheus.Registry, namespace st
 
 	gwCfg := serve.GateWayConfig{
 		FS:             user_pb.OpenAPI,
+		Spec:           "user.swagger.json",
 		GRPCServerPort: cfg.Server.Port.GRPC,
 		Reg:            reg,
 		Namespace:      namespace,
 		GRPCGWPattern:  "/",
-		OpenAPIPattern: "/user/api/v1/openapi/",
 		DocsUIPattern:  "/user/api/v1/docs/",
-		StaticFS:       static.SwaggerUI,
 		Register:       user_pb.RegisterUserExternalAPIHandler,
 		DevMode:        cfg.DevMode,
 	}

@@ -10,7 +10,7 @@ tasks:
   test-integration:
     dir: '{{.USER_WORKING_DIR}}'
     cmds:
-      - "gotestsum --format pkgname -- -coverprofile=cover.out -tags=integration -race -count=1 ./..."
+      - "gotestsum --format pkgname -- -coverprofile=.cover/cover.out -tags=integration -race -count=1 ./..."
 
   build:
     dir: '{{.USER_WORKING_DIR}}'
