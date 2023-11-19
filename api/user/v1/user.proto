@@ -330,8 +330,7 @@ message ListUserAvatarRequest {
   string user_id = 1;
 }
 message ListUserAvatarResponse {
-  repeated
-UserAvatar avatars = 1;
+  repeated UserAvatar avatars = 1;
 }
 
 message UserAvatar {

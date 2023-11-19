@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package api.auth.v1;
+
+// AuthAPI - отвечает за работу с сессиями пользователей,
+// Все запросы автоматически фиксирует IP и UserAgent
+// для отправки их в топик .......
+// bla bla bla
+service AuthAPI {
+  // Авторизовывает пользователя и возвращает token сессии в metadata.
+  //
+  // При нескольких неуспешных кейсов с одного IP
+  // временно блокирует возможность авторизоваться
+  //
+  // В случае отсутствия такого пользователя в системе,
+  // будет код ошибки bad request, а не not found
+  rpc Auth(AuthRequest) returns (AuthResponse);
+}
+
+message AuthRequest {
+  // Для авторизации может быть использован как username
+  // так и email, email регистронезависимый, а username зависимый
+  oneof login {
+    string username = 1;
+    string email = 2;
+  }
+  string password = 3;
+}
+
+message AuthResponse {}
