@@ -37,16 +37,18 @@ func TestQueue_Smoke(t *testing.T) {
 		UpdatedAt: time.Now(),
 	}
 
+	user2 := user
+
 	err = client.AddUser(ctx, msgId, user)
 	assert.NoError(err)
 
-	user.FullName = "username2"
-	user.Email = "email2@gmail.com"
+	user2.FullName = "username2"
+	user2.Email = "email2@gmail.com"
 
-	err = client.UpdateUser(ctx, msgId, user)
+	err = client.UpdateUser(ctx, msgId, user2)
 	assert.NoError(err)
 
-	err = client.DeleteUser(ctx, msgId, user)
+	err = client.DeleteUser(ctx, msgId, user2)
 	assert.NoError(err)
 
 	subscribeCtx, subscribeCtxCancel := context.WithTimeout(ctx, time.Second*2)
@@ -64,6 +66,9 @@ func TestQueue_Smoke(t *testing.T) {
 		assert.NoError(err)
 		assert.Equal(user.ID, eventAdd.GetAdd().User.Id)
 		assert.Equal(user.Email, eventAdd.GetAdd().User.Email)
+		assert.Equal(user2.ID, eventAdd.GetUpdate().User.Id)
+		assert.Equal(user2.Email, eventAdd.GetUpdate().User.Email)
+		assert.Equal(user2.ID, eventAdd.GetDelete().UserId)
 
 		return nil
 	})
