@@ -7,7 +7,7 @@ import "api/user_status/v1/user_status.proto";
 import "buf/validate/validate.proto";
 import "google/rpc/code.proto";
 
-option go_package = "github.com/ZergsLaw/back-template/api/session/v1;pb";
+option go_package = "github.com/ZergsLaw/back-template1/api/session/v1;pb";
 
 // Internal service API for managing user session.
 service SessionInternalAPI {

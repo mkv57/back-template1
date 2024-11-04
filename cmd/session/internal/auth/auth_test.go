@@ -6,7 +6,7 @@ import (
 	"github.com/gofrs/uuid"
 	"github.com/stretchr/testify/require"
 
-	"github.com/ZergsLaw/back-template/cmd/session/internal/auth"
+	"github.com/ZergsLaw/back-template1/cmd/session/internal/auth"
 )
 
 func TestAuth_TokenAndSubject(t *testing.T) {

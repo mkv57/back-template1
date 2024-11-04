@@ -7,7 +7,7 @@ import (
 	"github.com/gofrs/uuid"
 	"github.com/minio/minio-go/v7"
 
-	"github.com/ZergsLaw/back-template/cmd/user/internal/app"
+	"github.com/ZergsLaw/back-template1/cmd/user/internal/app"
 )
 
 // UploadFile implements app.FileStore.

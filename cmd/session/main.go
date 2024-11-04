@@ -18,16 +18,16 @@ import (
 	"google.golang.org/grpc/grpclog"
 	"gopkg.in/yaml.v3"
 
-	"github.com/ZergsLaw/back-template/cmd/session/internal/adapters/queue"
-	"github.com/ZergsLaw/back-template/cmd/session/internal/adapters/repo"
-	"github.com/ZergsLaw/back-template/cmd/session/internal/api"
-	"github.com/ZergsLaw/back-template/cmd/session/internal/app"
-	"github.com/ZergsLaw/back-template/cmd/session/internal/auth"
-	"github.com/ZergsLaw/back-template/internal/flags"
-	"github.com/ZergsLaw/back-template/internal/grpchelper"
-	"github.com/ZergsLaw/back-template/internal/logger"
-	"github.com/ZergsLaw/back-template/internal/metrics"
-	"github.com/ZergsLaw/back-template/internal/serve"
+	"github.com/ZergsLaw/back-template1/cmd/session/internal/adapters/queue"
+	"github.com/ZergsLaw/back-template1/cmd/session/internal/adapters/repo"
+	"github.com/ZergsLaw/back-template1/cmd/session/internal/api"
+	"github.com/ZergsLaw/back-template1/cmd/session/internal/app"
+	"github.com/ZergsLaw/back-template1/cmd/session/internal/auth"
+	"github.com/ZergsLaw/back-template1/internal/flags"
+	"github.com/ZergsLaw/back-template1/internal/grpchelper"
+	"github.com/ZergsLaw/back-template1/internal/logger"
+	"github.com/ZergsLaw/back-template1/internal/metrics"
+	"github.com/ZergsLaw/back-template1/internal/serve"
 )
 
 type (

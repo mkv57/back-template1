@@ -8,8 +8,8 @@ package pb
 
 import (
 	_ "buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go/buf/validate"
-	_ "github.com/ZergsLaw/back-template/api/annotations/v1"
-	v1 "github.com/ZergsLaw/back-template/api/user_status/v1"
+	_ "github.com/ZergsLaw/back-template1/api/annotations/v1"
+	v1 "github.com/ZergsLaw/back-template1/api/user_status/v1"
 	_ "google.golang.org/genproto/googleapis/rpc/code"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"

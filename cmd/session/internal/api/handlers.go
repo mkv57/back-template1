@@ -7,9 +7,9 @@ import (
 
 	"github.com/gofrs/uuid"
 
-	pb "github.com/ZergsLaw/back-template/api/session/v1"
-	"github.com/ZergsLaw/back-template/cmd/session/internal/app"
-	"github.com/ZergsLaw/back-template/internal/dom"
+	pb "github.com/ZergsLaw/back-template1/api/session/v1"
+	"github.com/ZergsLaw/back-template1/cmd/session/internal/app"
+	"github.com/ZergsLaw/back-template1/internal/dom"
 )
 
 // Save implements pb.SessionAPIServer.

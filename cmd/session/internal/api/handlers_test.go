@@ -11,10 +11,10 @@ import (
 	"google.golang.org/grpc/status"
 	"google.golang.org/protobuf/proto"
 
-	session_pb "github.com/ZergsLaw/back-template/api/session/v1"
-	user_status_pb "github.com/ZergsLaw/back-template/api/user_status/v1"
-	"github.com/ZergsLaw/back-template/cmd/session/internal/app"
-	"github.com/ZergsLaw/back-template/internal/dom"
+	session_pb "github.com/ZergsLaw/back-template1/api/session/v1"
+	user_status_pb "github.com/ZergsLaw/back-template1/api/user_status/v1"
+	"github.com/ZergsLaw/back-template1/cmd/session/internal/app"
+	"github.com/ZergsLaw/back-template1/internal/dom"
 )
 
 func TestApi_Save(t *testing.T) {
