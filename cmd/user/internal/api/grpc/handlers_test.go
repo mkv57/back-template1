@@ -14,10 +14,10 @@ import (
 	"google.golang.org/grpc/status"
 	"google.golang.org/protobuf/proto"
 
-	user_pb "github.com/ZergsLaw/back-template/api/user/v1"
-	user_status_pb "github.com/ZergsLaw/back-template/api/user_status/v1"
-	"github.com/ZergsLaw/back-template/cmd/user/internal/app"
-	"github.com/ZergsLaw/back-template/internal/dom"
+	user_pb "github.com/ZergsLaw/back-template1/api/user/v1"
+	user_status_pb "github.com/ZergsLaw/back-template1/api/user_status/v1"
+	"github.com/ZergsLaw/back-template1/cmd/user/internal/app"
+	"github.com/ZergsLaw/back-template1/internal/dom"
 )
 
 func TestApi_VerificationEmail(t *testing.T) {

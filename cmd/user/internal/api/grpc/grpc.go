@@ -18,12 +18,12 @@ import (
 	"google.golang.org/grpc/peer"
 	"google.golang.org/grpc/status"
 
-	user_pb "github.com/ZergsLaw/back-template/api/user/v1"
-	"github.com/ZergsLaw/back-template/cmd/user/internal/app"
-	"github.com/ZergsLaw/back-template/internal/dom"
-	"github.com/ZergsLaw/back-template/internal/grpchelper"
-	"github.com/ZergsLaw/back-template/internal/logger"
-	"github.com/ZergsLaw/back-template/internal/metrics"
+	user_pb "github.com/ZergsLaw/back-template1/api/user/v1"
+	"github.com/ZergsLaw/back-template1/cmd/user/internal/app"
+	"github.com/ZergsLaw/back-template1/internal/dom"
+	"github.com/ZergsLaw/back-template1/internal/grpchelper"
+	"github.com/ZergsLaw/back-template1/internal/logger"
+	"github.com/ZergsLaw/back-template1/internal/metrics"
 )
 
 // For convenient testing.

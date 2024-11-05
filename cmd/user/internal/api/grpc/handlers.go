@@ -10,9 +10,9 @@ import (
 	"google.golang.org/grpc/metadata"
 	"google.golang.org/grpc/status"
 
-	user_pb "github.com/ZergsLaw/back-template/api/user/v1"
-	"github.com/ZergsLaw/back-template/cmd/user/internal/app"
-	"github.com/ZergsLaw/back-template/internal/adapters/session"
+	user_pb "github.com/ZergsLaw/back-template1/api/user/v1"
+	"github.com/ZergsLaw/back-template1/cmd/user/internal/app"
+	"github.com/ZergsLaw/back-template1/internal/adapters/session"
 )
 
 const (
