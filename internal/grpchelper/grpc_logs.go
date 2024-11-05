@@ -8,8 +8,8 @@ import (
 	"github.com/grpc-ecosystem/go-grpc-middleware/v2/interceptors/logging"
 	grpc_recovery "github.com/grpc-ecosystem/go-grpc-middleware/v2/interceptors/recovery"
 
-	"github.com/ZergsLaw/back-template/internal/logger"
-	"github.com/ZergsLaw/back-template/internal/metrics"
+	"github.com/ZergsLaw/back-template1/internal/logger"
+	"github.com/ZergsLaw/back-template1/internal/metrics"
 )
 
 func recoveryFunc(m metrics.Metrics, err error) grpc_recovery.RecoveryHandlerFuncContext {

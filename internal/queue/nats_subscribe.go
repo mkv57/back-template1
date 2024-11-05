@@ -8,7 +8,7 @@ import (
 
 	"github.com/nats-io/nats.go"
 
-	"github.com/ZergsLaw/back-template/internal/logger"
+	"github.com/ZergsLaw/back-template1/internal/logger"
 )
 
 // Subscribe starts subscription by args.

@@ -5,8 +5,8 @@ import (
 
 	"github.com/gofrs/uuid"
 
-	"github.com/ZergsLaw/back-template/cmd/session/client"
-	"github.com/ZergsLaw/back-template/internal/dom"
+	"github.com/ZergsLaw/back-template1/cmd/session/client"
+	"github.com/ZergsLaw/back-template1/internal/dom"
 )
 
 func TestClient_Save(t *testing.T) {

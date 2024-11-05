@@ -16,7 +16,7 @@ import (
 	"google.golang.org/grpc/keepalive"
 	"google.golang.org/grpc/reflection"
 
-	"github.com/ZergsLaw/back-template/internal/metrics"
+	"github.com/ZergsLaw/back-template1/internal/metrics"
 )
 
 const (

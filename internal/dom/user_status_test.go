@@ -5,7 +5,7 @@ import (
 
 	"github.com/stretchr/testify/require"
 
-	"github.com/ZergsLaw/back-template/internal/dom"
+	"github.com/ZergsLaw/back-template1/internal/dom"
 )
 
 func TestUserStatus_IsFreeze(t *testing.T) {

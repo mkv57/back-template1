@@ -8,7 +8,7 @@ import (
 
 	"google.golang.org/grpc"
 
-	"github.com/ZergsLaw/back-template/internal/logger"
+	"github.com/ZergsLaw/back-template1/internal/logger"
 )
 
 // GRPC starts gRPC server on addr, logged as service.

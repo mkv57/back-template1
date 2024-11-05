@@ -10,7 +10,7 @@ import (
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 
-	"github.com/ZergsLaw/back-template/internal/logger"
+	"github.com/ZergsLaw/back-template1/internal/logger"
 )
 
 // HTTP starts HTTP server on addr using handler logged as service.

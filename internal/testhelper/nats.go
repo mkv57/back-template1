@@ -10,7 +10,7 @@ import (
 	"github.com/ory/dockertest/v3"
 	"github.com/stretchr/testify/require"
 
-	"github.com/ZergsLaw/back-template/internal/queue"
+	"github.com/ZergsLaw/back-template1/internal/queue"
 )
 
 // Default values for making nats test container.

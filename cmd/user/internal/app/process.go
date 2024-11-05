@@ -7,8 +7,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/ZergsLaw/back-template/internal/dom"
-	"github.com/ZergsLaw/back-template/internal/logger"
+	"github.com/ZergsLaw/back-template1/internal/dom"
+	"github.com/ZergsLaw/back-template1/internal/logger"
 )
 
 func (a *App) Process(ctx context.Context) error {
