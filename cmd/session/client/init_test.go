@@ -14,9 +14,9 @@ import (
 	"go.uber.org/mock/gomock"
 	"google.golang.org/grpc"
 
-	pb "github.com/ZergsLaw/back-template/api/session/v1"
-	"github.com/ZergsLaw/back-template/cmd/session/client"
-	"github.com/ZergsLaw/back-template/internal/testhelper"
+	pb "github.com/ZergsLaw/back-template1/api/session/v1"
+	"github.com/ZergsLaw/back-template1/cmd/session/client"
+	"github.com/ZergsLaw/back-template1/internal/testhelper"
 )
 
 var (

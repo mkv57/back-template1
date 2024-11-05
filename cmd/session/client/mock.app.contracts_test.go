@@ -12,7 +12,7 @@ import (
 	context "context"
 	reflect "reflect"
 
-	pb "github.com/ZergsLaw/back-template/api/session/v1"
+	pb "github.com/ZergsLaw/back-template1/api/session/v1"
 	gomock "go.uber.org/mock/gomock"
 	grpc "google.golang.org/grpc"
 )

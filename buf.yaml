@@ -69,10 +69,11 @@ lint:
     # api/session/v1/ # For ignoring some proto files for linting.
   ]
   ignore_only:
+  
   # DEFAULT: [
   # api/session/v1/ # For ignoring specific linter for specific directories/files.
   # ]
-
+  
   # If you want to use comment-driven ignores in buf you should set true.
   # But I shouldn't recommend using this.
   # https://docs.buf.build/lint/configuration#ignore_only

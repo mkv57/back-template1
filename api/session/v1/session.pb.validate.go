@@ -18,7 +18,7 @@ import (
 
 	"google.golang.org/protobuf/types/known/anypb"
 
-	pb "github.com/ZergsLaw/back-template/api/user_status/v1"
+	pb "github.com/ZergsLaw/back-template1/api/user_status/v1"
 )
 
 // ensure the imports are used

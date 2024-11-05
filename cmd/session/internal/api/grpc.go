@@ -12,12 +12,12 @@ import (
 	healthpb "google.golang.org/grpc/health/grpc_health_v1"
 	"google.golang.org/grpc/status"
 
-	pb "github.com/ZergsLaw/back-template/api/session/v1"
-	"github.com/ZergsLaw/back-template/cmd/session/internal/app"
-	"github.com/ZergsLaw/back-template/internal/dom"
-	"github.com/ZergsLaw/back-template/internal/grpchelper"
-	"github.com/ZergsLaw/back-template/internal/logger"
-	"github.com/ZergsLaw/back-template/internal/metrics"
+	pb "github.com/ZergsLaw/back-template1/api/session/v1"
+	"github.com/ZergsLaw/back-template1/cmd/session/internal/app"
+	"github.com/ZergsLaw/back-template1/internal/dom"
+	"github.com/ZergsLaw/back-template1/internal/grpchelper"
+	"github.com/ZergsLaw/back-template1/internal/logger"
+	"github.com/ZergsLaw/back-template1/internal/metrics"
 )
 
 // For convenient testing.

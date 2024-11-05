@@ -13,10 +13,10 @@ import (
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 
-	pb "github.com/ZergsLaw/back-template/api/session/v1"
-	"github.com/ZergsLaw/back-template/internal/grpchelper"
+	pb "github.com/ZergsLaw/back-template1/api/session/v1"
+	"github.com/ZergsLaw/back-template1/internal/grpchelper"
 
-	"github.com/ZergsLaw/back-template/internal/dom"
+	"github.com/ZergsLaw/back-template1/internal/dom"
 )
 
 // Errors.

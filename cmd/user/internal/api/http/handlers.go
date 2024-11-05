@@ -11,9 +11,9 @@ import (
 	"github.com/gofrs/uuid"
 	"github.com/gorilla/mux"
 
-	"github.com/ZergsLaw/back-template/cmd/user/internal/app"
-	"github.com/ZergsLaw/back-template/internal/adapters/session"
-	"github.com/ZergsLaw/back-template/internal/logger"
+	"github.com/ZergsLaw/back-template1/cmd/user/internal/app"
+	"github.com/ZergsLaw/back-template1/internal/adapters/session"
+	"github.com/ZergsLaw/back-template1/internal/logger"
 )
 
 const maxAvatarSize = 25 << 20

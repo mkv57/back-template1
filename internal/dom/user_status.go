@@ -3,7 +3,7 @@ package dom
 import (
 	"fmt"
 
-	user_status_pb "github.com/ZergsLaw/back-template/api/user_status/v1"
+	user_status_pb "github.com/ZergsLaw/back-template1/api/user_status/v1"
 )
 
 // UserStatus user status in service.

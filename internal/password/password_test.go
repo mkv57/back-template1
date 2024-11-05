@@ -3,7 +3,7 @@ package password_test
 import (
 	"testing"
 
-	"github.com/ZergsLaw/back-template/internal/password"
+	"github.com/ZergsLaw/back-template1/internal/password"
 
 	"github.com/stretchr/testify/require"
 )

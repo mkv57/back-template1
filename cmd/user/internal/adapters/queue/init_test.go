@@ -2,17 +2,18 @@ package queue_test
 
 import (
 	"context"
-	"github.com/ZergsLaw/back-template/cmd/user/internal/adapters/queue"
-	"github.com/ZergsLaw/back-template/internal/logger"
-	que "github.com/ZergsLaw/back-template/internal/queue"
-	"github.com/ZergsLaw/back-template/internal/testhelper"
-	"github.com/prometheus/client_golang/prometheus"
-	"github.com/stretchr/testify/require"
 	"log/slog"
 	"os"
 	"path/filepath"
 	"strings"
 	"testing"
+
+	"github.com/ZergsLaw/back-template1/cmd/user/internal/adapters/queue"
+	"github.com/ZergsLaw/back-template1/internal/logger"
+	que "github.com/ZergsLaw/back-template1/internal/queue"
+	"github.com/ZergsLaw/back-template1/internal/testhelper"
+	"github.com/prometheus/client_golang/prometheus"
+	"github.com/stretchr/testify/require"
 )
 
 const (

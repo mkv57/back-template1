@@ -12,8 +12,8 @@ import (
 	context "context"
 	reflect "reflect"
 
-	app "github.com/ZergsLaw/back-template/cmd/session/internal/app"
-	dom "github.com/ZergsLaw/back-template/internal/dom"
+	app "github.com/ZergsLaw/back-template1/cmd/session/internal/app"
+	dom "github.com/ZergsLaw/back-template1/internal/dom"
 	uuid "github.com/gofrs/uuid"
 	gomock "go.uber.org/mock/gomock"
 )

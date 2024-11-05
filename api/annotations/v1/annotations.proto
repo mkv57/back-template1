@@ -5,7 +5,7 @@ package api.annotations.v1;
 import "google/protobuf/descriptor.proto";
 import "google/rpc/code.proto";
 
-option go_package = "github.com/ZergsLaw/back-template/api/annotations/v1;pb";
+option go_package = "github.com/ZergsLaw/back-template1/api/annotations/v1;pb";
 
 message MethodRule {
   repeated google.rpc.Code codes = 1;

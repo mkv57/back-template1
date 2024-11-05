@@ -14,7 +14,7 @@ import (
 	"github.com/rs/cors"
 	"google.golang.org/grpc"
 
-	"github.com/ZergsLaw/back-template/internal/grpchelper"
+	"github.com/ZergsLaw/back-template1/internal/grpchelper"
 )
 
 // GateWayConfig is config for building gRPC-Gateway proxy for WEB clients.

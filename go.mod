@@ -1,4 +1,4 @@
-module github.com/ZergsLaw/back-template
+module github.com/ZergsLaw/back-template1
 
 go 1.21
 
