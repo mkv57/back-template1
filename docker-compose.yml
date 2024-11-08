@@ -22,21 +22,21 @@ services:
       MINIO_ROOT_USER: "test_svc"
       MINIO_ROOT_PASSWORD: "test_pass"
     ports:
-      - "${BACK_TEMPLATE_MINIO_NODE1_ADDR_HTTP_PORT:-0}:9000"
-      - "${BACK_TEMPLATE_MINIO_NODE1_ADDR_ADMIN_PORT:-0}:9001"
+      - "${BACK_TEMPLATE1_MINIO_NODE1_ADDR_HTTP_PORT:-0}:9000"
+      - "${BACK_TEMPLATE1_MINIO_NODE1_ADDR_ADMIN_PORT:-0}:9001"
     volumes:
       - "minio_node1:/data/"
 
   nats-node1:
     image: "nats:2.10.5"
-    container_name: "back_template_nats_node1"
+    container_name: "back_template1_nats_node1"
     restart: "always"
     shm_size: "512m"
     labels:
       job: "nast-queue"
     ports:
-      - "${BACK_TEMPLATE_NATS_NODE1_ADDR_TCP_PORT:-0}:4222"
-      - "${BACK_TEMPLATE_NATS_NODE1_ADDR_HTTP_PORT:-0}:8222"
+      - "${BACK_TEMPLATE1_NATS_NODE1_ADDR_TCP_PORT:-0}:4222"
+      - "${BACK_TEMPLATE1_NATS_NODE1_ADDR_HTTP_PORT:-0}:8222"
     volumes:
       - "nats_node1:/data/jetstream"
       - "./configs/nats/node1/srv.conf/:/srv.conf"
@@ -46,14 +46,14 @@ services:
 
   nats-node2:
     image: "nats:2.10.5"
-    container_name: "back_template_nats_node2"
+    container_name: "back_template1_nats_node2"
     restart: "always"
     shm_size: "512m"
     labels:
       job: "nast-queue"
     ports:
-      - "${BACK_TEMPLATE_NATS_NODE2_ADDR_TCP_PORT:-0}:4222"
-      - "${BACK_TEMPLATE_NATS_NODE2_ADDR_HTTP_PORT:-0}:8222"
+      - "${BACK_TEMPLATE1_NATS_NODE2_ADDR_TCP_PORT:-0}:4222"
+      - "${BACK_TEMPLATE1_NATS_NODE2_ADDR_HTTP_PORT:-0}:8222"
     volumes:
       - "nats_node2:/data/jetstream"
       - "./configs/nats/node2/srv.conf/:/srv.conf"
@@ -63,14 +63,14 @@ services:
 
   nats-node3:
     image: "nats:2.10.5"
-    container_name: "back_template_nats_node3"
+    container_name: "back_template1_nats_node3"
     restart: "always"
     shm_size: "512m"
     labels:
       job: "nast-queue"
     ports:
-      - "${BACK_TEMPLATE_NATS_NODE3_ADDR_TCP_PORT:-0}:4222"
-      - "${BACK_TEMPLATE_NATS_NODE3_ADDR_HTTP_PORT:-0}:8222"
+      - "${BACK_TEMPLATE1_NATS_NODE3_ADDR_TCP_PORT:-0}:4222"
+      - "${BACK_TEMPLATE1_NATS_NODE3_ADDR_HTTP_PORT:-0}:8222"
     volumes:
       - "nats_node3:/data/jetstream"
       - "./configs/nats/node3/srv.conf/:/srv.conf"
@@ -80,7 +80,7 @@ services:
 
   promtail:
     image: "grafana/promtail:2.9.2"
-    container_name: "back_template_promtail"
+    container_name: "back_template1_promtail"
     restart: "always"
     volumes:
       - "./configs/promtail/promtail.yml:/etc/promtail/docker-config.yml"
@@ -117,14 +117,14 @@ services:
 
   cockroach-node1:
     image: cockroachdb/cockroach:v23.1.11
-    container_name: "back_template_cockroach_node1"
+    container_name: "back_template1_cockroach_node1"
     restart: "always"
     shm_size: "512m"
     labels:
       job: "cockroach-db"
     ports:
-      - "${BACK_TEMPLATE_COCKROACH_NODE1_ADDR_TCP_PORT:-0}:26257"
-      - "${BACK_TEMPLATE_COCKROACH_NODE1_ADDR_HTTP_PORT:-0}:8080"
+      - "${BACK_TEMPLATE1_COCKROACH_NODE1_ADDR_TCP_PORT:-0}:26257"
+      - "${BACK_TEMPLATE1_COCKROACH_NODE1_ADDR_HTTP_PORT:-0}:8080"
     volumes:
       - "cockroach_node1:/cockroach/cockroach-data:r"
       - "${COCKROACH_TLS_CERT}:/cockroach/certs/ca.crt:r"
@@ -142,14 +142,14 @@ services:
 
   cockroach-node2:
     image: cockroachdb/cockroach:v23.1.11
-    container_name: "back_template_cockroach_node2"
+    container_name: "back_template1_cockroach_node2"
     restart: "always"
     shm_size: "512m"
     labels:
       job: "cockroach-db"
     ports:
-      - "${BACK_TEMPLATE_COCKROACH_NODE2_ADDR_TCP_PORT:-0}:26257"
-      - "${BACK_TEMPLATE_COCKROACH_NODE2_ADDR_HTTP_PORT:-0}:8080"
+      - "${BACK_TEMPLATE1_COCKROACH_NODE2_ADDR_TCP_PORT:-0}:26257"
+      - "${BACK_TEMPLATE1_COCKROACH_NODE2_ADDR_HTTP_PORT:-0}:8080"
     volumes:
       - "cockroach_node2:/cockroach/cockroach-data"
       - "${COCKROACH_TLS_CERT}:/cockroach/certs/ca.crt"
@@ -167,14 +167,14 @@ services:
 
   cockroach-node3:
     image: cockroachdb/cockroach:v23.1.11
-    container_name: "back_template_cockroach_node3"
+    container_name: "back_template1_cockroach_node3"
     restart: "always"
     shm_size: "512m"
     labels:
       job: "cockroach-db"
     ports:
-      - "${BACK_TEMPLATE_COCKROACH_NODE3_ADDR_TCP_PORT:-0}:26257"
-      - "${BACK_TEMPLATE_COCKROACH_NODE3_ADDR_HTTP_PORT:-0}:8080"
+      - "${BACK_TEMPLATE1_COCKROACH_NODE3_ADDR_TCP_PORT:-0}:26257"
+      - "${BACK_TEMPLATE1_COCKROACH_NODE3_ADDR_HTTP_PORT:-0}:8080"
     volumes:
       - "cockroach_node3:/cockroach/cockroach-data"
       - "${COCKROACH_TLS_CERT}:/cockroach/certs/ca.crt"
@@ -192,7 +192,7 @@ services:
 
   cockroach-init:
     image: cockroachdb/cockroach:v23.1.11
-    container_name: "back_template_cockroach_init"
+    container_name: "back_template1_cockroach_init"
     restart: "no"
     depends_on:
       - cockroach-node1
@@ -223,7 +223,7 @@ services:
     build:
       context: .
       dockerfile: ./cmd/session/docker/Dockerfile
-    container_name: "back_template_session_svc"
+    container_name: "back_template1_session_svc"
     restart: always
     command: [
       "-cfg=/config.yml",
@@ -242,7 +242,7 @@ services:
     build:
       context: .
       dockerfile: ./cmd/user/docker/Dockerfile
-    container_name: "back_template_user_svc"
+    container_name: "back_template1_user_svc"
     restart: always
     labels:
       service: "user"
